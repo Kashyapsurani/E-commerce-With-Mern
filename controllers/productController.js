@@ -1,82 +1,42 @@
-const Product = require("../models/Product"); // Assuming you have a Product model
+const Product = require("../models/Product");
+const Category = require("../models/Category");
 
-// Fetch all products
 exports.getAllProducts = async (req, res) => {
-  try {
-    const products = await Product.find();
-    res.render("productList", { products }); // Render a view with the products data
-  } catch (err) {
-    res.status(500).send("Error fetching products");
-  }
+  const products = await Product.find().populate("category").populate("owner");
+  res.render("productList", { products });
 };
 
-// Fetch products added by the logged-in user
 exports.getMyProducts = async (req, res) => {
-  try {
-    const userId = req.user._id; // Assuming you store user info in req.user
-    const products = await Product.find({ owner: userId });
-    res.render("myProducts", { products });
-  } catch (err) {
-    res.status(500).send("Error fetching your products");
-  }
+  const products = await Product.find({ owner: req.user._id }).populate(
+    "category"
+  );
+  res.render("myProducts", { products });
 };
 
-// Show form for creating a new product
-exports.showProductForm = (req, res) => {
-  res.render("productForm"); // Render the form view
+exports.showProductForm = async (req, res) => {
+  const categories = await Category.find();
+  res.render("productForm", { categories, product: null });
 };
 
-// Handle creating a new product
 exports.createProduct = async (req, res) => {
-  try {
-    const { name, price, description } = req.body;
-    const newProduct = new Product({
-      name,
-      price,
-      description,
-      owner: req.user._id,
-    });
-    await newProduct.save();
-    res.redirect("/products"); // Redirect after successful creation
-  } catch (err) {
-    res.status(500).send("Error creating product");
-  }
+  const { name, price, category } = req.body;
+  await Product.create({ name, price, category, owner: req.user._id });
+  res.redirect("/products/my");
 };
 
-// Show form for editing an existing product
 exports.editProductForm = async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).send("Product not found");
-    }
-    res.render("productForm", { product }); // Pass the product data to the form
-  } catch (err) {
-    res.status(500).send("Error fetching product");
-  }
+  const product = await Product.findById(req.params.id);
+  const categories = await Category.find();
+  res.render("productForm", { product, categories });
 };
 
-// Handle updating an existing product
 exports.updateProduct = async (req, res) => {
-  try {
-    const { name, price, description } = req.body;
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      { name, price, description },
-      { new: true }
-    );
-    res.redirect(`/products/${updatedProduct.id}`); // Redirect to the updated product's page
-  } catch (err) {
-    res.status(500).send("Error updating product");
-  }
+  const { name, price, category } = req.body;
+  await Product.findByIdAndUpdate(req.params.id, { name, price, category });
+  res.redirect("/products/my");
 };
 
-// Handle deleting a product
 exports.deleteProduct = async (req, res) => {
-  try {
-    await Product.findByIdAndDelete(req.params.id);
-    res.redirect("/products"); // Redirect back to the product list after deletion
-  } catch (err) {
-    res.status(500).send("Error deleting product");
-  }
+  await Product.findByIdAndDelete(req.params.id);
+  res.redirect("/products/my");
 };

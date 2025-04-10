@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const categoryRoutes = require('./routes/categoryRoutes');  // Adjust the path as needed
 
 const User = require("./models/User");
 
@@ -46,6 +47,10 @@ app.use(async (req, res, next) => {
 app.use("/", require("./routes/authRoutes"));
 app.use("/products", require("./routes/productRoutes"));
 app.use("/categories", require("./routes/categoryRoutes"));
+const productRoutes = require('./routes/productRoutes');  // Path to your productRoutes.js file
+
+app.use(categoryRoutes);
+app.use('/products', productRoutes);  // Prefix all product routes with '/products'
 
 // Start server
 app.listen(process.env.PORT || 3000, () =>

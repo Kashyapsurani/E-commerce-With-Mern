@@ -1,19 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const {
-  register,
-  login,
-  logout,
-  requireAuth,
-  checkRole,
-} = require("../controllers/authController");
+const { register, login, logout } = require("../controllers/authController");
 
-router.get("/login", (req, res) => res.render("login")); // Render login page
-router.get("/register", (req, res) => res.render("register")); // Render register page
+router.get("/", (_, res) => res.redirect("/products"));
 
-router.post("/register", register); // Register a new user
-router.post("/login", login); // Log in a user
-router.get("/logout", logout); // Log out the user
+router.get("/login", (_, res) => res.render("login"));
+router.get("/register", (_, res) => res.render("register"));
 
+router.post("/register", register);
+router.post("/login", login);
+router.get("/logout", logout);
 
 module.exports = router;

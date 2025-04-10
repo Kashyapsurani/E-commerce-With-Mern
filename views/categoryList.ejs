@@ -97,13 +97,14 @@
             <button type="submit">Add</button>
         </form>
 
-        <ul>
-            <% categories.forEach(c=> { %>
-                <li>
-                    <%= c.name %>
-                </li>
-                <% }) %>
-        </ul>
+
+<ul>
+    <% categories.forEach(category=> { %>
+        <li>
+            <%= category.name %>
+        </li>
+        <% }); %>
+</ul>
 </body>
 
 </html>

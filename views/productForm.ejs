@@ -78,20 +78,28 @@
 
 <body>
     <%- include('partials/navbar') %>
-        <h2>Add Product</h2>
+    <!-- views/productForm.ejs -->
+    <h2>Add a New Product</h2>
+    
+<form action="/products/new" method="POST">
+        <label for="name">Product Name:</label>
+        <input type="text" name="name" id="name" required />
+    
+        <label for="price">Price:</label>
+        <input type="number" name="price" id="price" required />
+    
+        <label for="category">Category:</label>
+        <select name="category" id="category" required>
+            <% categories.forEach(category=> { %>
+                <option value="<%= category._id %>">
+                    <%= category.name %>
+                </option>
+                <% }); %>
+        </select>
+    
+        <button type="submit">Add Product</button>
+    </form>
 
-        <form action="/products/add" method="POST">
-            <input name="name" placeholder="Product Name" required />
-            <input name="price" type="number" placeholder="Price" required />
-            <select name="category">
-                <% categories.forEach(c=> { %>
-                    <option value="<%= c._id %>">
-                        <%= c.name %>
-                    </option>
-                    <% }) %>
-            </select>
-            <button type="submit">Add</button>
-        </form>
 </body>
 
 </html>
