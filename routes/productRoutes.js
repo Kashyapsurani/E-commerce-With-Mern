@@ -20,7 +20,7 @@ router.post("/add", requireAuth, createProduct);
 
 router.get("/new", requireAuth, showProductForm); // Show the form to add a new product
 router.post("/new", requireAuth, createProduct);   // Handle the form submission
-
+ 
 // Display the form to add a new product
 router.get("/add", requireAuth, showProductForm);
 

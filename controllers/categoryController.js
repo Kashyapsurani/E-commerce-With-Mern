@@ -6,7 +6,7 @@ exports.getAllCategories = async (req, res) => {
     res.render("categoryList", { categories });
   } catch (err) {
     res.status(500).send("Error fetching categories");
-  }
+  } 
 };
 
 exports.showCategoryForm = (req, res) => {

@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 exports.register = async (req, res) => {
   await User.create(req.body);
   res.redirect("/login");
-};
+}; 
 
 exports.login = async (req, res) => {
   const user = await User.findOne({ username: req.body.username });

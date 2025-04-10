@@ -30,7 +30,7 @@ module.exports.requireAuth = (req, res, next) => {
     }
   } else {
     res.redirect("/login"); // Redirect if no token is present
-  }
+  } 
 };
 
 // Role checking middleware

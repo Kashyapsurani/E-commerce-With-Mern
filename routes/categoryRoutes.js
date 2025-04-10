@@ -18,7 +18,7 @@ router.post(
 );
 
 router.get(
-  "/categories/edit/:id",
+  "/categories/edit/:id", 
   requireAuth,
   checkRole("admin"),
   categoryController.editCategoryForm

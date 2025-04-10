@@ -39,7 +39,7 @@ app.use(async (req, res, next) => {
     }
   } else {
     res.locals.user = null;
-  }
+  } 
   next();
 });
 

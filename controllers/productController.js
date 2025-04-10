@@ -35,7 +35,7 @@ exports.updateProduct = async (req, res) => {
   await Product.findByIdAndUpdate(req.params.id, { name, price, category });
   res.redirect("/products/my");
 };
-
+ 
 exports.deleteProduct = async (req, res) => {
   await Product.findByIdAndDelete(req.params.id);
   res.redirect("/products/my");
