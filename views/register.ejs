@@ -10,11 +10,11 @@
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f0f2f5;
-           
             height: 100vh;
         }
-        .main{
-             display: flex;
+
+        .main {
+            display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -22,7 +22,6 @@
         }
 
         .form-container {
-            
             background-color: #fff;
             padding: 40px 30px;
             border-radius: 8px;
@@ -85,33 +84,48 @@
         a:hover {
             text-decoration: underline;
         }
+
+        /* Style for error message */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 
 <body>
     <%- include('partials/navbar', { user: null }) %>
-    <div class="main">
+        <div class="main">
+            <div class="form-container">
+                <h2>Create an Account</h2>
 
-        <div class="form-container">
-            <h2>Create an Account</h2>
-            <form action="/register" method="POST" class="form-box">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" required>
-                
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" required>
-                
-                <label for="role">Role</label>
-                <select name="role" id="role" required>
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                </select>
-                
-                <button type="submit">Register</button>
-            </form>
-            <p>Already have an account? <a href="/login">Login here</a></p>
+                <!-- Display error message if exists -->
+                <% if (typeof errorMessage !=='undefined' ) { %>
+                    <div class="error-message">
+                        <%= errorMessage %>
+                    </div>
+                    <% } %>
+
+                        <form action="/register" method="POST" class="form-box">
+                            <label for="username">Username</label>
+                            <input type="text" name="username" id="username" required>
+
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" required>
+
+                            <label for="role">Role</label>
+                            <select name="role" id="role" required>
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                            </select>
+
+                            <button type="submit">Register</button>
+                        </form>
+                        <p>Already have an account? <a href="/login">Login here</a></p>
+            </div>
         </div>
-    </div> 
 </body>
 
 </html>
